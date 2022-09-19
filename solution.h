@@ -14,7 +14,7 @@
 
 #define sin(x) _Generic((x), \
       long double: sinl, \
-      double: sin, \
+      default: sin, \
       float: sinf)(x)
 
 #ifndef ARRAY_SIZE

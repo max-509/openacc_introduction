@@ -1,0 +1,28 @@
+launch CUDA kernel  file=/home/students/m.vershinin/labs/openacc_intro/solution_gpu.c function=compute_sin_on_gpu line=14 device=0 threadid=1 num_gangs=65535 num_workers=1 vector_length=128 grid=65535 block=128
+launch CUDA kernel  file=/home/students/m.vershinin/labs/openacc_intro/solution_gpu.c function=compute_sin_on_gpu line=19 device=0 threadid=1 num_gangs=65535 num_workers=1 vector_length=128 grid=65535 block=128 shared memory=2048
+launch CUDA kernel  file=/home/students/m.vershinin/labs/openacc_intro/solution_gpu.c function=compute_sin_on_gpu line=19 device=0 threadid=1 num_gangs=1 num_workers=1 vector_length=256 grid=1 block=256 shared memory=2048
+
+Accelerator Kernel Timing data
+/home/students/m.vershinin/labs/openacc_intro/solution_gpu.c
+  compute_sin_on_gpu  NVIDIA  devicenum=0
+    time(us): 21,496
+    12: compute region reached 1 time
+        14: kernel launched 1 time
+            grid: [65535]  block: [128]
+             device time(us): total=18,519 max=18,519 min=18,519 avg=18,519
+            elapsed time(us): total=18,575 max=18,575 min=18,575 avg=18,575
+    12: data region reached 2 times
+    16: compute region reached 1 time
+        19: kernel launched 1 time
+            grid: [65535]  block: [128]
+             device time(us): total=2,821 max=2,821 min=2,821 avg=2,821
+            elapsed time(us): total=2,854 max=2,854 min=2,854 avg=2,854
+        19: reduction kernel launched 1 time
+            grid: [1]  block: [256]
+             device time(us): total=112 max=112 min=112 avg=112
+            elapsed time(us): total=141 max=141 min=141 avg=141
+    16: data region reached 2 times
+        16: data copyin transfers: 1
+             device time(us): total=10 max=10 min=10 avg=10
+        21: data copyout transfers: 1
+             device time(us): total=34 max=34 min=34 avg=34

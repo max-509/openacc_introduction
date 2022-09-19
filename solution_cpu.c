@@ -4,22 +4,18 @@
 
 FLOAT_TYPE
 compute_sin_on_cpu() {
-  FLOAT_TYPE *sin_array;
+  FLOAT_TYPE *sin_array = (FLOAT_TYPE *)malloc(sizeof(FLOAT_TYPE) * ARRAY_SIZE);
 
-  FLOAT_TYPE sin_sum = (FLOAT_TYPE) 0.0;
-#pragma acc data create(sin_array[0:ARRAY_SIZE])
-  {
-#pragma acc kernels
-    for (unsigned i = 0; i < ARRAY_SIZE; ++i) {
-      sin_array[i] = sin(i * RADIAN_DIV);
-    }
-
-#pragma acc kernels loop reduction(+:sin_sum)
-    for (unsigned i = 0; i < ARRAY_SIZE; ++i) {
-      sin_sum += sin_array[i];
-    }
+  for (unsigned i = 0; i < ARRAY_SIZE; ++i) {
+    sin_array[i] = sin(i * RADIAN_DIV);
   }
 
+  FLOAT_TYPE sin_sum = (FLOAT_TYPE) 0.0;
+  for (unsigned i = 0; i < ARRAY_SIZE; ++i) {
+    sin_sum += sin_array[i];
+  }
+
+  free(sin_array);
 
   return sin_sum;
 }
@@ -37,5 +33,5 @@ int main() {
     }
   }
 
-  printf("cpu;%lu;%s;%f;%e\n", ARRAY_SIZE, XSTR(FLOAT_TYPE), elapsed_time, sin_sum_cpu);
+  printf("cpu,%lu,%s,%f,%e\n", ARRAY_SIZE, XSTR(FLOAT_TYPE), elapsed_time, sin_sum_cpu);
 }
